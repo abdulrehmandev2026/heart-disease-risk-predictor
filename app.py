@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+from datetime import datetime
 
 # Load model and scaler
 model = joblib.load("heart_model.joblib")
@@ -8,6 +9,15 @@ scaler = joblib.load("scaler.joblib")
 
 st.title("❤️ Heart Disease Risk Predictor")
 st.write("Patient details daalo — model risk batayega. Ye sirf learning ke liye hai, medical advice nahi hai.")
+
+# 1. Time show karo — sidebar mein
+now = datetime.now()
+st.sidebar.write("📅 Date:", now.strftime("%d %b %Y"))
+st.sidebar.write("🕐 Time:", now.strftime("%I:%M %p"))
+
+# History list — pehli baar khali banao
+if "history" not in st.session_state:
+    st.session_state.history = []
 
 # Inputs
 age = st.slider("Age", 20, 80, 50)
@@ -38,8 +48,29 @@ if st.button("Predict Risk"):
     st.progress(int(risk))
 
     if risk < 30:
+        band = "Low"
         st.success("🟢 Low Risk — healthy lifestyle continue rakho.")
     elif risk < 70:
+        band = "Moderate"
         st.warning("🟡 Moderate Risk — doctor se consult karo.")
     else:
+        band = "High"
         st.error("🔴 High Risk — urgent cardiac evaluation karwao.")
+
+    # 2. History mein save karo
+    st.session_state.history.append({
+        "Time": datetime.now().strftime("%I:%M %p"),
+        "Age": age,
+        "Sex": "Male" if sex == 1 else "Female",
+        "BP": trestbps,
+        "Cholesterol": chol,
+        "Risk %": round(risk, 1),
+        "Band": band
+    })
+
+# 2. History show karo
+st.subheader("📋 Prediction History")
+if st.session_state.history:
+    st.dataframe(pd.DataFrame(st.session_state.history))
+else:
+    st.write("Abhi koi prediction nahi hai — pehla prediction karo.")
