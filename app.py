@@ -10,7 +10,7 @@ scaler = joblib.load("scaler.joblib")
 st.title("❤️ Heart Disease Risk Predictor")
 st.write("Enter patient details — the model will predict the risk. This is for learning purposes only, not medical advice.")
 
-# 1. Show date and time in the sidebar
+# Show date and time in the sidebar
 now = datetime.now()
 st.sidebar.write("📅 Date:", now.strftime("%d %b %Y"))
 st.sidebar.write("🕐 Time:", now.strftime("%I:%M %p"))
@@ -19,10 +19,10 @@ st.sidebar.write("🕐 Time:", now.strftime("%I:%M %p"))
 if "history" not in st.session_state:
     st.session_state.history = []
 
-# Inputs
+# Inputs — values match the dataset exactly
 age = st.slider("Age", 20, 80, 50)
 sex = st.selectbox("Sex", [0, 1], format_func=lambda x: "Female" if x == 0 else "Male")
-cp = st.selectbox("Chest Pain Type", [0, 1, 2, 3])
+cp = st.selectbox("Chest Pain Type", [1, 2, 3, 4])
 trestbps = st.slider("Resting Blood Pressure", 90, 200, 120)
 chol = st.slider("Cholesterol", 120, 570, 200)
 fbs = st.selectbox("Fasting Blood Sugar > 120", [0, 1], format_func=lambda x: "No" if x == 0 else "Yes")
@@ -30,8 +30,8 @@ restecg = st.selectbox("Resting ECG", [0, 1, 2])
 thalach = st.slider("Max Heart Rate", 70, 210, 150)
 exang = st.selectbox("Exercise Angina", [0, 1], format_func=lambda x: "No" if x == 0 else "Yes")
 oldpeak = st.slider("Oldpeak (ST Depression)", 0.0, 6.0, 1.0)
-cp = st.selectbox("Chest Pain Type", [1, 2, 3, 4])
 slope = st.selectbox("Slope", [1, 2, 3])
+ca = st.selectbox("Major Vessels (ca)", [0, 1, 2, 3])
 thal = st.selectbox("Thal", [3, 6, 7])
 
 if st.button("Predict Risk"):
@@ -57,7 +57,7 @@ if st.button("Predict Risk"):
         band = "High"
         st.error("🔴 High Risk — get an urgent cardiac evaluation.")
 
-    # 2. Save this prediction in history
+    # Save this prediction in history
     st.session_state.history.append({
         "Time": datetime.now().strftime("%I:%M %p"),
         "Age": age,
@@ -68,7 +68,7 @@ if st.button("Predict Risk"):
         "Band": band
     })
 
-# 2. Show prediction history
+# Show prediction history
 st.subheader("📋 Prediction History")
 if st.session_state.history:
     st.dataframe(pd.DataFrame(st.session_state.history))
