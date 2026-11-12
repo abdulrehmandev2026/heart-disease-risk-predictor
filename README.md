@@ -83,3 +83,63 @@ Train / Test split: 80% / 20% (stratified). Recall is reported because missing a
 - `pip` package manager
 
 ### 1. Clone the project
+
+git clone https://github.com/abdulrehmandev2026/heart-disease-risk-predictor.git
+cd heart-disease-risk-predictor
+
+
+
+### 2. Install dependencies
+
+pip install -r requirements.txt
+
+
+
+
+---
+
+## ▶️ Run the Application
+streamlit run app.py
+
+
+
+The app will open automatically in your browser at `http://localhost:8501`.
+
+---
+
+## 📁 Project Structure
+heart-disease-risk-predictor/
+│
+├── app.py # Streamlit web application
+├── requirements.txt # Python dependency list
+├── heart.csv # Dataset
+├── heart_model.joblib # Saved best ML model
+├── scaler.joblib # Saved StandardScaler
+├── Heart_Disease_Risk_Predictor.ipynb # Training notebook
+└── README.md # This file
+
+
+
+
+---
+
+## 🔑 Key Information
+| Item | Detail |
+| --- | --- |
+| Language | Python 3.9+ |
+| Framework | Streamlit (frontend + server) |
+| Dataset size | 297 rows × 14 columns |
+| Train / Test split | 80% / 20% (stratified) |
+| Feature scaling | StandardScaler |
+| Model selection | Best ROC-AUC on test set |
+| Best model | Random Forest — 86.7% accuracy, 0.941 ROC-AUC |
+
+---
+
+## ⚕️ Medical Disclaimer
+> This tool is intended for **educational and research purposes only**.
+> It is **not** a substitute for professional medical advice, diagnosis, or treatment.
+> Always seek the advice of a qualified healthcare provider.
+
+---
+*Built with ❤️ using Python, Scikit-Learn & Streamlit*
