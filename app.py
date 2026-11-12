@@ -30,9 +30,9 @@ restecg = st.selectbox("Resting ECG", [0, 1, 2])
 thalach = st.slider("Max Heart Rate", 70, 210, 150)
 exang = st.selectbox("Exercise Angina", [0, 1], format_func=lambda x: "No" if x == 0 else "Yes")
 oldpeak = st.slider("Oldpeak (ST Depression)", 0.0, 6.0, 1.0)
-slope = st.selectbox("Slope", [0, 1, 2])
-ca = st.selectbox("Major Vessels (ca)", [0, 1, 2, 3])
-thal = st.selectbox("Thal", [0, 1, 2, 3])
+cp = st.selectbox("Chest Pain Type", [1, 2, 3, 4])
+slope = st.selectbox("Slope", [1, 2, 3])
+thal = st.selectbox("Thal", [3, 6, 7])
 
 if st.button("Predict Risk"):
     data = pd.DataFrame([{
